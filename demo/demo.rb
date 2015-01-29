@@ -4,7 +4,7 @@ TEST_BATCH_NAME = 'Test star rating'
 TEST_REFERENCE_ID = 1234
 
 # setup JobRequester with credentials (or it will look in ENV vars by default)
-requester = Spare5::JobRequester.new(spare5_username: ENV['SPARE5_USERNAME'], spare5_token: ENV['SPARE5_TOKEN'], base_url: 'http://localhost:3000/partner/v2/')
+requester = Spare5::JobRequester.new(spare5_username: ENV['SPARE5_USERNAME'], spare5_token: ENV['SPARE5_TOKEN'])
 puts "connected! #{requester}"
 
 # load all batches associated with this account
