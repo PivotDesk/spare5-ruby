@@ -7,7 +7,7 @@ module Spare5
     end
 
     def job_batches(filters = {})
-      response = Connection.get('job_batches', filters)
+      response = Connection.get(Connection.base_url + 'job_batches', filters)
       job_batches = response['result']
 
       job_batches = job_batches.map { |jb| JobBatch.new(jb.merge('job_requester' => self)) }
@@ -22,7 +22,7 @@ module Spare5
         return { error: "#{key.to_s} required" } if !params[key]
       end
 
-      response = Connection.post('job_batches', params)
+      response = Connection.post(Connection.base_url + 'job_batches', params)
       result = response['result']
 
       if result
@@ -32,8 +32,8 @@ module Spare5
       end
     end
 
-    def answers(options = {})
-      Answer.load_answers(options)
+    def responses(options = {})
+      Response.load_responses(options)
     end
 
     def to_s

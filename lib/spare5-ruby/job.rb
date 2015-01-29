@@ -1,7 +1,7 @@
 module Spare5
   class Job
     REQUIRED_PARAMETERS = [:num_responders]
-    ATTRIBUTES = [:id, :num_responders, :num_completed, :finished, :reference_id, :job_batch]
+    ATTRIBUTES = [:url, :num_responders, :num_completed, :finished, :reference_id, :job_batch]
 
     attr_accessor *ATTRIBUTES
 
@@ -15,8 +15,8 @@ module Spare5
       self.questions = json['questions']
     end
 
-    def answers(options = {})
-      Answer.load_answers(options.merge(job: self))
+    def responses(options = {})
+      Response.load_responses(options.merge(job: self))
     end
 
     def to_s

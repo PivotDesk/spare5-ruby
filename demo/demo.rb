@@ -4,7 +4,7 @@ TEST_BATCH_NAME = 'Test star rating'
 TEST_REFERENCE_ID = 1234
 
 # setup JobRequester with credentials (or it will look in ENV vars by default)
-requester = Spare5::JobRequester.new(spare5_username: ENV['SPARE5_USERNAME'], spare5_token: ENV['SPARE5_TOKEN'])
+requester = Spare5::JobRequester.new(spare5_username: ENV['SPARE5_USERNAME'], spare5_token: ENV['SPARE5_TOKEN'], base_url: 'http://localhost:3000/partner/v2/')
 puts "connected! #{requester}"
 
 # load all batches associated with this account
@@ -53,14 +53,14 @@ else
   test_job = test_batch.create_job!(job_params)
 end
 
-# get answers for a single job
-answers = test_job.answers
-puts "test job has #{answers.length} answers"
+# get responses for a single job
+responses = test_job.responses
+puts "test job has #{responses.length} responses"
 
-# all answers for a batch
-answers = test_batch.answers
-puts "test batch has #{answers.length} answers"
+# all responses for a batch
+responses = test_batch.responses
+puts "test batch has #{responses.length} responses"
 
-# or all answers from any batches (sorted by most recent first)
-answers = requester.answers
-puts "requester has #{answers.length} answers (in the first page any way)"
+# or all responses from any batches (sorted by most recent first)
+responses = requester.responses
+puts "requester has #{responses.length} responses (in the first page any way)"

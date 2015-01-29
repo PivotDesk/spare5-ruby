@@ -1,5 +1,5 @@
 module Spare5
-  class Answer
+  class Response
     ATTRIBUTES = [:job_id, :job_batch_id, :question_id, :user_id, :response, :reference_id, :created_at]
 
     attr_accessor *ATTRIBUTES
@@ -11,19 +11,19 @@ module Spare5
     end
 
     # implementing here because it's used from various models
-    def self.load_answers(filters = {})
+    def self.load_responses(filters = {})
       case
         when filters[:job]
-          path = "job_batches/#{filters[:job].job_batch.id}/jobs/#{filters[:job].id}/answers"
+          path = filters[:job].url + '/responses'
         when filters[:job_batch]
-          path = "job_batches/#{filters[:job_batch].id}/answers"
+          path = filters[:job_batch].url + '/responses'
         else
-          path = 'answers'
+          path = Connection.base_url + 'responses'
       end
 
       response = Connection.get(path)
-      answers = response['result']
-      answers.map { |a| Answer.new(a) }
+      responses = response['result']
+      responses.map { |a| Response.new(a) }
     end
   end
 end

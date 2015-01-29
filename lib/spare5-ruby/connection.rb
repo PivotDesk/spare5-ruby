@@ -30,7 +30,7 @@ module Spare5
     end
 
     def self.send_request(method, raise_on_error, path, params)
-      url = URI.parse("#{base_url}#{path}")
+      url = URI.parse(path)
       case method
         when :post
           req = Net::HTTP::Post.new(url.request_uri)

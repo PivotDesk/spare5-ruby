@@ -1,7 +1,7 @@
 module Spare5
   class JobBatch
     REQUIRED_PARAMETERS = [:job_type, :name, :reward]
-    ATTRIBUTES = [:id, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester]
+    ATTRIBUTES = [:url, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester]
 
     JOB_TYPE_STAR_RATING = 'STARRATING'
 
@@ -14,7 +14,7 @@ module Spare5
     end
 
     def jobs(filters = {})
-      response = Connection.get("job_batches/#{self.id}/jobs", filters)
+      response = Connection.get(self.url + '/jobs', filters)
       jobs = response['result']
 
       jobs = jobs.map { |j| Job.new(j.merge('job_batch' => self)) }
@@ -35,7 +35,7 @@ module Spare5
       question_params = params[:questions]
       return { error: "Need at least 1 question" } if !question_params || question_params.length == 0
 
-      response = Connection.send_request(:post, raise_on_error, "job_batches/#{self.id}/jobs", params)
+      response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", params)
       result = response['result']
 
       if result
@@ -47,8 +47,8 @@ module Spare5
       end
     end
 
-    def answers(options = {})
-      Answer.load_answers(options.merge(job_batch: self))
+    def responses(options = {})
+      Response.load_responses(options.merge(job_batch: self))
     end
   end
 end
