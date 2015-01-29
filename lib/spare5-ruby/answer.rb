@@ -21,7 +21,8 @@ module Spare5
           path = 'answers'
       end
 
-      answers = Connection.get(path)
+      response = Connection.get(path)
+      answers = response['result']
       answers.map { |a| Answer.new(a) }
     end
   end

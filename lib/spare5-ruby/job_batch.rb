@@ -14,7 +14,8 @@ module Spare5
     end
 
     def jobs(filters = {})
-      jobs = Connection.get("job_batches/#{self.id}/jobs", filters)
+      response = Connection.get("job_batches/#{self.id}/jobs", filters)
+      jobs = response['result']
 
       jobs = jobs.map { |j| Job.new(j.merge('job_batch' => self)) }
 
@@ -34,7 +35,8 @@ module Spare5
       question_params = params[:questions]
       return { error: "Need at least 1 question" } if !question_params || question_params.length == 0
 
-      result = Connection.send_request(:post, raise_on_error, "job_batches/#{self.id}/jobs", params)
+      response = Connection.send_request(:post, raise_on_error, "job_batches/#{self.id}/jobs", params)
+      result = response['result']
 
       if result
         j = Job.new(result)
