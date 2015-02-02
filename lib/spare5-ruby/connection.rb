@@ -9,7 +9,7 @@ module Spare5
 
       def base_url=(base_url)
         @base_url = base_url
-        use_ssl = @base_url.start_with?('https')
+        self.use_ssl = @base_url.start_with?('https')
       end
     end
 
@@ -45,7 +45,7 @@ module Spare5
       req.content_type = 'application/json'
 
       http = Net::HTTP.new(url.hostname, url.port)
-      http.use_ssl = true if use_ssl
+      http.use_ssl = true if self.use_ssl
 
       response = http.start.request(req)
       http_code = response.code.to_i

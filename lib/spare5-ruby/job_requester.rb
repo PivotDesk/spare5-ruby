@@ -3,7 +3,7 @@ module Spare5
     def initialize(options = {})
       Connection.api_username = options[:api_username] || ENV['SPARE5_USERNAME']
       Connection.api_token = options[:api_token] || ENV['SPARE5_TOKEN']
-      Connection.base_url = options[:base_url] || ENV['SPARE5_BASE_URL'] || 'http://app.spare5.com/partner/v2/'
+      Connection.base_url = options[:base_url] || ENV['SPARE5_BASE_URL'] || 'https://app.spare5.com/partner/v2/'
     end
 
     def job_batches(filters = {})
