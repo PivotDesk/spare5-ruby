@@ -22,20 +22,14 @@ module Spare5
       jobs
     end
 
-    def create_job!(params)
-      create_job(params.merge(raise_on_error: true))
+    def create_job!(job)
+      create_job(job, true)
     end
 
-    def create_job(params)
-      raise_on_error = params.delete(:raise_on_error)
-      Job::REQUIRED_PARAMETERS.each do |key|
-        return { error: "#{key.to_s} required" } if !params[key]
-      end
+    def create_job(job, raise_on_error)
+      job.validate!(self.job_type)
 
-      question_params = params[:questions]
-      return { error: "Need at least 1 question" } if !question_params || question_params.length == 0
-
-      response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", params)
+      response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
       result = response['result']
 
       if result

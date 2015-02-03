@@ -1,3 +1,4 @@
+$LOAD_PATH << File.expand_path("../lib", __FILE__)
 require 'spare5-ruby/version'
 
 Gem::Specification.new do |s|

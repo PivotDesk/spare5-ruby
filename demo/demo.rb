@@ -1,10 +1,10 @@
 require 'spare5-ruby'
-
+require 'spare5-ruby/job_types/star_rating'
 TEST_BATCH_NAME = 'Test star rating'
 TEST_REFERENCE_ID = 1234
 
 # setup JobRequester with credentials (or it will look in ENV vars by default)
-requester = Spare5::JobRequester.new(spare5_username: ENV['SPARE5_USERNAME'], spare5_token: ENV['SPARE5_TOKEN'])
+requester = Spare5::JobRequester.new(api_username: ENV['SPARE5_USERNAME'], api_token: ENV['SPARE5_TOKEN'])
 puts "connected! #{requester}"
 
 # load all batches associated with this account
@@ -27,30 +27,15 @@ if test_job
   puts "job with reference_id #{TEST_REFERENCE_ID} already in the test batch. #{test_job.inspect}"
 else
   puts "job with reference_id #{TEST_REFERENCE_ID} not found in the test batch, creating new job"
-  # Some job types can have multiple questions or question_images, but most job types have just 1 question and 1 image
-  job_params = {
-      num_responders: 3,
-      reference_id: TEST_REFERENCE_ID,
-      questions:
-        [
-          {
-            reference_url: "http://www.spare5.com/companies",
-            hints: ["Don''t run", "turn off the lights"],
-            answer_options: ['Red', 'Green', 'Blue'],
-            is_multi_select: false,
-            question_images:
-              [
-                {
-                  name: 'My image',
-                  description: 'Lots of info about my image',
-                  original_url: 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
-                }
-              ]
-          }
-        ]
-    }
 
-  test_job = test_batch.create_job!(job_params)
+  j = Spare5::StarRatingJob.new(
+      'num_responders' => 3,
+      'reference_id' => TEST_REFERENCE_ID,
+      'star_hints' => ['Terrible', 'Poor', 'Average', 'Good', 'Excellent'],
+      'image_url' => 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
+  )
+
+  test_job = test_batch.create_job!(j)
 end
 
 # get responses for a single job

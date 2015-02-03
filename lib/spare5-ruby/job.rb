@@ -19,6 +19,25 @@ module Spare5
       Response.load_responses(options.merge(job: self))
     end
 
+    def save_to_batch(job_batch)
+      job_batch.create!(self.to_json)
+    end
+
+    def to_json
+      result = {}
+      ATTRIBUTES.each { |key| v = self.send(key) ; result[key] = v if v }
+      result[:questions] = self.questions
+      result
+    end
+
+    def validate!(job_type)
+      REQUIRED_PARAMETERS.each do |key|
+        raise "#{key.to_s} required" if !self.send(key)
+      end
+
+      raise "Need at least 1 question" if !self.questions || self.questions.length == 0
+    end
+
     def to_s
       ATTRIBUTES.map { |key| self.send(key) }.to_s
     end
