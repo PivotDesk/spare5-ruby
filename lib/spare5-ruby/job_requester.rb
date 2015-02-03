@@ -8,7 +8,7 @@ module Spare5
 
     def job_batches(filters = {})
       response = Connection.get(Connection.base_url + 'job_batches', filters)
-      job_batches = response['result']
+      job_batches = response[:result]
 
       job_batches = job_batches.map { |jb| JobBatch.new(jb.merge('job_requester' => self)) }
       job_batches.select! { |jb| jb.name == filters[:name] } if filters[:name]
@@ -23,7 +23,7 @@ module Spare5
       end
 
       response = Connection.post(Connection.base_url + 'job_batches', params)
-      result = response['result']
+      result = response[:result]
 
       if result
         JobBatch.new(result)

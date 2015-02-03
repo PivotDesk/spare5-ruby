@@ -9,10 +9,10 @@ module Spare5
 
     def initialize(json={})
       ATTRIBUTES.each do |key|
-        self.send("#{key}=", json[key.to_s])
+        self.send("#{key}=", json[key])
       end
 
-      self.questions = json['questions']
+      self.questions = json[:questions]
     end
 
     def responses(options = {})

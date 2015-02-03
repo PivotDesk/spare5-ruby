@@ -6,7 +6,7 @@ module Spare5
 
     def initialize(json={})
       ATTRIBUTES.each do |key|
-        self.send("#{key}=", json[key.to_s])
+        self.send("#{key}=", json[key])
       end
     end
 
@@ -22,7 +22,7 @@ module Spare5
       end
 
       response = Connection.get(path)
-      responses = response['result']
+      responses = response[:result]
       responses.map { |a| Response.new(a) }
     end
   end

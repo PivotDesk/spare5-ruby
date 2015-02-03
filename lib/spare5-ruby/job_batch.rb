@@ -1,7 +1,7 @@
 module Spare5
   class JobBatch
     REQUIRED_PARAMETERS = [:job_type, :name, :reward]
-    ATTRIBUTES = [:url, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester]
+    ATTRIBUTES = [:url, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester, :answer_options_json]
 
     JOB_TYPE_STAR_RATING = 'STARRATING'
 
@@ -9,13 +9,13 @@ module Spare5
 
     def initialize(json={})
       ATTRIBUTES.each do |key|
-        self.send("#{key}=", json[key.to_s])
+        self.send("#{key}=", json[key])
       end
     end
 
     def jobs(filters = {})
       response = Connection.get(self.url + '/jobs', filters)
-      jobs = response['result']
+      jobs = response[:result]
 
       jobs = jobs.map { |j| Job.new(j.merge('job_batch' => self)) }
 
@@ -30,7 +30,7 @@ module Spare5
       job.validate!(self.job_type)
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
-      result = response['result']
+      result = response[:result]
 
       if result
         j = Job.new(result)
@@ -43,6 +43,10 @@ module Spare5
 
     def responses(options = {})
       Response.load_responses(options.merge(job_batch: self))
+    end
+
+    def to_s
+      ATTRIBUTES.map { |key| self.send(key) }.to_s
     end
   end
 end

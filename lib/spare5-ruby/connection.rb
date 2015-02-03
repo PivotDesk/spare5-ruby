@@ -60,7 +60,7 @@ module Spare5
       elsif !body || body.empty?
         return {}
       else
-        return JSON::parse(body)
+        JSON::parse(body, symbolize_names: true)
       end
     end
 

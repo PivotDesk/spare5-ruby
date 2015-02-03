@@ -13,7 +13,12 @@ puts "Job batch count = #{all_batches.length}"
 
 test_batch = requester.job_batches(name: TEST_BATCH_NAME).first
 if !test_batch
-  test_batch = requester.create_job_batch(name: TEST_BATCH_NAME, reward: 0.02, job_type: Spare5::JobBatch::JOB_TYPE_STAR_RATING)
+  test_batch = requester.create_job_batch(
+      name: TEST_BATCH_NAME,
+      reward: 0.02,
+      job_type: Spare5::JobBatch::JOB_TYPE_STAR_RATING,
+      answer_options_json: Spare5::StarRatingJob::build_answer_option_json(['Terrible', 'Poor', 'Average', 'Good', 'Excellent']),
+  )
 end
 puts "test_batch #{test_batch}"
 
@@ -29,10 +34,10 @@ else
   puts "job with reference_id #{TEST_REFERENCE_ID} not found in the test batch, creating new job"
 
   j = Spare5::StarRatingJob.new(
-      'num_responders' => 3,
-      'reference_id' => TEST_REFERENCE_ID,
-      'star_hints' => ['Terrible', 'Poor', 'Average', 'Good', 'Excellent'],
-      'image_url' => 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
+      num_responders: 3,
+      reference_id: TEST_REFERENCE_ID,
+      star_hints: ['Terribler', 'Poorer', 'Averager', 'Gooder', 'Excellenter'],
+      image_url: 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
   )
 
   test_job = test_batch.create_job!(j)
