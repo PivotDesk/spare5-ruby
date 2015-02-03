@@ -31,7 +31,7 @@ module Spare5
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
 
-      if response[:result]
+      if response && response[:result]
         j = Job.new(response[:result])
         j.job_batch = self
         j
