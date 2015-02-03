@@ -30,10 +30,9 @@ module Spare5
       job.validate!(self.job_type)
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
-      result = response[:result]
 
-      if result
-        j = Job.new(result)
+      if response[:result]
+        j = Job.new(response[:result])
         j.job_batch = self
         j
       else
