@@ -26,7 +26,7 @@ module Spare5
       create_job(job, true)
     end
 
-    def create_job(job, raise_on_error)
+    def create_job(job, raise_on_error = false)
       job.validate!(self.job_type)
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
