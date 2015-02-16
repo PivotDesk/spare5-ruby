@@ -15,7 +15,6 @@ test_batch = requester.job_batches(name: TEST_BATCH_NAME).first
 if !test_batch
   test_batch = requester.create_job_batch(
       name: TEST_BATCH_NAME,
-      reward: 0.02,
       job_type: Spare5::JobBatch::JOB_TYPE_STAR_RATING,
       answer_options_json: Spare5::StarRatingJob::build_answer_option_json(['Terrible', 'Poor', 'Average', 'Good', 'Excellent']),
   )
