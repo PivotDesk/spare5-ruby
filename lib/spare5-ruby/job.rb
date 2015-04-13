@@ -1,7 +1,7 @@
 module Spare5
   class Job
     REQUIRED_PARAMETERS = [:num_responders]
-    ATTRIBUTES = [:url, :num_responders, :num_completed, :finished, :reference_id, :job_batch]
+    ATTRIBUTES = [:url, :num_responders, :num_completed, :finished, :reference_id, :job_batch, :job_details]
 
     attr_accessor *ATTRIBUTES
 
