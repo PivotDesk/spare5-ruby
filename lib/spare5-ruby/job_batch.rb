@@ -20,16 +20,17 @@ module Spare5
       response = Connection.get(self.url + '/jobs', filters)
       jobs = response[:result]
 
-      jobs = jobs.map { |j| Job.new(j.merge('job_batch' => self)) }
+      jobs = jobs.map { |j| Job.new(j.merge(job_batch: self)) }
 
       jobs
     end
 
-    def create_job!(job)
-      create_job(job, true)
+    def create_job!(job_or_job_params)
+      create_job(job_or_job_params, true)
     end
 
-    def create_job(job, raise_on_error = false)
+    def create_job(job_or_job_params, raise_on_error = false)
+      job = Job.new(job_or_job_params) if job_or_job_params.is_a?(Hash)
       job.validate!(self.job_type)
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
