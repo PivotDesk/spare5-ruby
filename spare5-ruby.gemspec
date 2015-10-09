@@ -4,7 +4,7 @@ require 'spare5-ruby/version'
 Gem::Specification.new do |s|
   s.name        = 'spare5-ruby'
   s.version     = Spare5::VERSION
-  s.date        = '2015-01-26'
+  s.date        = Date.today.to_s
   s.summary     = "Spare5 API toolkit for creating and managing job batches, jobs, questions, and answers!"
   s.description = "A gem for accessing the Spare5 API"
   s.authors     = ["Spare5"]
