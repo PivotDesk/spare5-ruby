@@ -1,6 +1,6 @@
 module Spare5
   class Response
-    ATTRIBUTES = [:job_id, :job_batch_id, :question_id, :user_id, :response, :reference_id, :created_at]
+    ATTRIBUTES = [:job_id, :job_batch_id, :question_id, :user_id, :response, :reference_id, :created_at, :num_responders, :num_completed, :best_response, :best_score]
 
     attr_accessor *ATTRIBUTES
 
