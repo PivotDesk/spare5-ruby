@@ -30,7 +30,12 @@ module Spare5
     end
 
     def create_job(job_or_job_params, raise_on_error = false)
-      job = Job.new(job_or_job_params) if job_or_job_params.is_a?(Hash)
+      if job_or_job_params.is_a?(Spare5::Job)
+        job = job_or_job_params
+      else
+        job = Job.new(job_or_job_params)
+      end
+
       job.validate!(self.job_type)
 
       response = Connection.send_request(:post, raise_on_error, self.url + "/jobs", job.to_json)
