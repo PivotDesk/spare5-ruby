@@ -35,7 +35,8 @@ else
   j = Spare5::StarRatingJob.new(
       num_responders: 3,
       reference_id: TEST_REFERENCE_ID,
-      star_hints: ['Terribler', 'Poorer', 'Averager', 'Gooder', 'Excellenter'],
+      star_hints: ['Terrible', 'Poor', 'Averag', 'Good', 'Excellent'],
+      hints: ["Tap the image to enlarge"],
       image_url: 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
   )
 

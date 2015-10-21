@@ -8,6 +8,7 @@ module Spare5
                 {
                     answer_options_json: self.class.build_answer_option_json(options[:star_hints]),
                     is_multi_select: false,
+                    hints: options[:hints],
                     question_images:
                         [
                             {
