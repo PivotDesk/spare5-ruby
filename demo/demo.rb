@@ -35,7 +35,7 @@ else
   j = Spare5::StarRatingJob.new(
       num_responders: 3,
       reference_id: TEST_REFERENCE_ID,
-      star_hints: ['Terrible', 'Poor', 'Averag', 'Good', 'Excellent'],
+      star_hints: ['Terrible', 'Poor', 'Average', 'Good', 'Excellent'],
       hints: ["Tap the image to enlarge"],
       image_url: 'http://cdn.sheknows.com/articles/2013/04/Puppy_3.jpg',
   )
@@ -50,7 +50,3 @@ puts "test job has #{responses.length} responses"
 # all responses for a batch
 responses = test_batch.responses
 puts "test batch has #{responses.length} responses"
-
-# or all responses from any batches (sorted by most recent first)
-responses = requester.responses
-puts "requester has #{responses.length} responses (in the first page any way)"
