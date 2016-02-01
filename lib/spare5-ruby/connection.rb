@@ -44,23 +44,24 @@ module Spare5
       req.basic_auth(api_username, api_token)
       req.content_type = 'application/json'
 
-      http = Net::HTTP.new(url.hostname, url.port)
-      http.use_ssl = true if self.use_ssl
+      Net::HTTP.start(url.hostname, url.port) do |http|
+        http.use_ssl = true if self.use_ssl
 
-      response = http.start.request(req)
-      http_code = response.code.to_i
-      body = response.body
+        response = http.request(req)
+        http_code = response.code.to_i
+        body = response.body
 
-      if !http_code.between?(200, 299)
-        if raise_on_error
-          raise "error code #{http_code}. Message: '#{body}'"
+        if !http_code.between?(200, 299)
+          if raise_on_error
+            raise "error code #{http_code}. Message: '#{body}'"
+          else
+            return nil
+          end
+        elsif !body || body.empty?
+          return {}
         else
-          return nil
+          JSON::parse(body, symbolize_names: true)
         end
-      elsif !body || body.empty?
-        return {}
-      else
-        JSON::parse(body, symbolize_names: true)
       end
     end
 
