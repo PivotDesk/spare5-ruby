@@ -44,9 +44,7 @@ module Spare5
       req.basic_auth(api_username, api_token)
       req.content_type = 'application/json'
 
-      Net::HTTP.start(url.hostname, url.port) do |http|
-        http.use_ssl = true if self.use_ssl
-
+      Net::HTTP.start(url.hostname, url.port, use_ssl: self.use_ssl) do |http|
         response = http.request(req)
         http_code = response.code.to_i
         body = response.body
