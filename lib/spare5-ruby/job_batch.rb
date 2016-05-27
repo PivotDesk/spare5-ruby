@@ -4,7 +4,7 @@ module Spare5
     REQUIRED_PARAMETERS = [:job_type, :name]
 
     # Deprecated: reward is set by the Spare5 server based on task type, and the value passed is ignored
-    ATTRIBUTES = [:url, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester, :answer_options_json]
+    ATTRIBUTES = [:url, :name, :reward, :image_url, :callback_url, :instruction_pages, :job_type, :job_requester, :answer_options_json, :job_template]
 
     JOB_TYPE_STAR_RATING = 'STARRATING'
 

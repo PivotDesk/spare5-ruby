@@ -1,7 +1,7 @@
 module Spare5
   class Job
     REQUIRED_PARAMETERS = [:num_responders]
-    ATTRIBUTES = [:url, :num_responders, :num_completed, :finished, :reference_id, :job_batch, :job_details]
+    ATTRIBUTES = [:url, :num_responders, :num_completed, :finished, :reference_id, :job_batch, :job_details, :details]
 
     attr_accessor *ATTRIBUTES
 
@@ -35,7 +35,7 @@ module Spare5
         raise "#{key.to_s} required" if !self.send(key)
       end
 
-      raise "Need at least 1 question" if !self.questions || self.questions.length == 0
+      raise "Need at least 1 question" if (self.questions.nil? || self.questions.empty?) && !self.details
     end
 
     def to_s
